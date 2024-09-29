@@ -14,12 +14,20 @@ for processor_num in processor_nums:
     results[-1] = float(results[-1][:-2])
 
 plt.scatter(processor_nums, results)
-m, b = np.polyfit(processor_nums, results, 1)
-plt.plot(processor_nums, [m * xi + b for xi in processor_nums], color='red', label='Best Fit Line')
+m = np.sum(np.array(processor_nums) * np.array(results)) / np.sum(np.array(processor_nums) ** 2)
+plt.plot([0] + processor_nums, [0] + [m * xi for xi in processor_nums], color='red', label='Best Fit Line')
+
+# Set the spines (axis lines) to intersect at (0, 0)
+plt.gca().spines['left'].set_position('zero')  # y-axis
+plt.gca().spines['bottom'].set_position('zero')  # x-axis
+
+# Set bounds for the axes so they stop at the data range
+plt.gca().spines['left'].set_bounds(0, max(results))
+plt.gca().spines['bottom'].set_bounds(0, max(processor_nums))
 
 plt.xlabel('Number of processors')
 plt.ylabel('ns per day')
-plt.title('Efficiency for NAMD run on varying number of processors')
+plt.title('ns per day for NAMD run on varying number of processors')
 
 plt.savefig("one_node_graph_time.png")
 
@@ -37,6 +45,8 @@ plt.scatter(processor_nums, efficieny)
 
 m, b = np.polyfit(processor_nums, efficieny, 1)
 plt.plot(processor_nums, [m * xi + b for xi in processor_nums], color='red', label='Best Fit Line')
+
+plt.ylim(0, 1.2)
 
 plt.xlabel('Number of processors')
 plt.ylabel('Efficiency')
