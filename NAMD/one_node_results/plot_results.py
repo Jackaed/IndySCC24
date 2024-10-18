@@ -1,5 +1,6 @@
 import subprocess
 import numpy as np
+from scipy.interpolate import make_interp_spline
 import matplotlib.pyplot as plt
 
 processor_nums = [1, 2, 4, 8, 16]
@@ -13,21 +14,20 @@ for processor_num in processor_nums:
     results.append(result.stdout)
     results[-1] = float(results[-1][:-2])
 
+print(results)
+
 plt.scatter(processor_nums, results)
 m = np.sum(np.array(processor_nums) * np.array(results)) / np.sum(np.array(processor_nums) ** 2)
 plt.plot([0] + processor_nums, [0] + [m * xi for xi in processor_nums], color='red', label='Best Fit Line')
 
 # Set the spines (axis lines) to intersect at (0, 0)
-plt.gca().spines['left'].set_position('zero')  # y-axis
-plt.gca().spines['bottom'].set_position('zero')  # x-axis
+plt.ylim(bottom=0)
+plt.xlim(0)
 
-# Set bounds for the axes so they stop at the data range
-plt.gca().spines['left'].set_bounds(0, max(results))
-plt.gca().spines['bottom'].set_bounds(0, max(processor_nums))
 
 plt.xlabel('Number of processors')
 plt.ylabel('ns per day')
-plt.title('ns per day for NAMD run on varying number of processors')
+plt.title('Performance vs number of processors')
 
 plt.savefig("one_node_graph_time.png")
 
@@ -39,7 +39,6 @@ time_to_core_ratio = [time/num_processor for time, num_processor
 most_efficient = max(time_to_core_ratio)
 
 efficieny = [ratio / most_efficient for ratio in time_to_core_ratio]
-print(efficieny)
 
 plt.scatter(processor_nums, efficieny)
 
@@ -51,5 +50,5 @@ plt.ylim(0, 1.2)
 plt.xlabel('Number of processors')
 plt.ylabel('Efficiency')
 
-plt.title('Efficency for NAMD run on varying number of cores')
+plt.title('Efficiency vs number of processors')
 plt.savefig("one_node_graph_efficiency.png")
