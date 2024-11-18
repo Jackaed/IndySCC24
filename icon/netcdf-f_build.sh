@@ -8,7 +8,7 @@ CC=$MPICC FC=$MPIFC CXX=$MPICXX F90=$MPIF90 F77=$MPIF77 \
 	LDFLAGS="-L${NETCDF_ROOT}/lib -L${HDF5_ROOT}/lib -L${ZLIB_ROOT}/lib" \
 	LD_LIBRARY_PATH=${NETCDF_ROOT}/lib:${HDF5_ROOT}/lib:${ZLIB_ROOT}/lib \
 	LIBS="-lhdf5_hl -lhdf5 -lz -lcurl" \
-	./configure --disable-shared --prefix=$BUILD_PATH/$TOOL_CHAIN/netcdf-fortran-4.6.1
+	./configure --prefix=$BUILD_PATH/$TOOL_CHAIN/netcdf-fortran-4.6.1
 make -j
 make install
 cd ..
