@@ -6,19 +6,20 @@ import seaborn as sns
 import pandas as pd
 
 
-node_nums = [1, 2, 3, 4]
-command = ["python", "ns_per_day.py", "-q", "-f", "file"]
-results = []
-
-for node_num in node_nums:
-    command[-1] = f"mpiapoa1-{node_num}-nodes.log"
-    result = subprocess.run(command, capture_output=True, text=True)
-
-    results.append(result.stdout)
-    results[-1] = float(results[-1][:-2])
-
-
-results = [4.128, 5.153, 3.887, 3.626]
+#node_nums = [1, 2, 3, 4]
+#command = ["python", "ns_per_day.py", "-q", "-f", "file"]
+#results = []
+#
+#for node_num in node_nums:
+#    command[-1] = f"mpiapoa1-{node_num}-nodes.log"
+#    result = subprocess.run(command, capture_output=True, text=True)
+#
+#    results.append(result.stdout)
+#    results[-1] = float(results[-1][:-2])
+#
+#
+node_nums = [1, 4, 8, 30]
+results = [1370, 3651, 6651, 7029]
 plt.scatter(node_nums, results)
 # new_results = [0] + results
 # new_node_nums = [0] + node_nums
@@ -48,10 +49,10 @@ m = np.sum(np.array(node_nums) * np.array(results)) / \
 # Set bounds for the axes so they stop at the data range
 
 plt.xlabel('Number of nodes')
-plt.ylabel('ns per day')
+plt.ylabel('Gflops')
 plt.title('Performance vs number of nodes')
 
-plt.savefig("multi_node_graph_time.png")
+plt.savefig("hero_run_scaling.png")
 
 plt.clf()
 
