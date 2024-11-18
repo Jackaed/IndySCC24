@@ -3,7 +3,7 @@ wget https://github.com/pantoniou/libfyaml/releases/download/v0.9/libfyaml-0.9.t
 tar -xzf libfyaml-0.9.tar.gz
 cd libfyaml-0.9
 mkdir build
-CC=$CC CXX=$CXX CFLAGS="-O3" ./configure --prefix=$(pwd)/build
+CC=$CC CXX=$CXX CFLAGS="-O3" ./configure --prefix=$BUILD_PATH/$TOOL_CHAIN/libfyaml-0.9
 make -j
 make install
 cd ..
